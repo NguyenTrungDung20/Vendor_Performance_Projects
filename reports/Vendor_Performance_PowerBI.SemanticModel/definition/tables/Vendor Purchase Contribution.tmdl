@@ -1,0 +1,55 @@
+table 'Vendor Purchase Contribution'
+	lineageTag: 1e4e86b1-017b-4b71-988e-00e99b41ecae
+
+	column Rank
+		dataType: int64
+		lineageTag: 84ff1c99-04dd-4099-bd87-a1227f15e5a4
+		summarizeBy: sum
+		sourceColumn: Rank
+
+	column VendorName
+		dataType: string
+		lineageTag: 59274d86-aed4-45ad-9dc2-d38d1db40aa5
+		summarizeBy: none
+		sourceColumn: VendorName
+
+	column TotalPurchaseDollars
+		dataType: double
+		lineageTag: 760601dc-d10a-46a1-9592-1ea0ae0497e2
+		summarizeBy: sum
+		sourceColumn: TotalPurchaseDollars
+
+	column GrossProfit
+		dataType: double
+		lineageTag: 2fa53c68-55d3-45fd-8ac5-d0ee59764016
+		summarizeBy: sum
+		sourceColumn: GrossProfit
+
+	column TotalSalesDollars
+		dataType: double
+		lineageTag: 9ba34a02-1619-4f64-bf09-5d91736cfeb6
+		summarizeBy: sum
+		sourceColumn: TotalSalesDollars
+
+	column PurchaseContributionPct
+		dataType: double
+		lineageTag: 470cbe69-5659-48d8-bf0f-55640f072b71
+		summarizeBy: sum
+		sourceColumn: PurchaseContributionPct
+
+	column CumulativeContributionPct
+		dataType: double
+		lineageTag: 5d32dd4a-a51f-4217-836a-3c09acb1bc4a
+		summarizeBy: sum
+		sourceColumn: CumulativeContributionPct
+
+	partition 'Vendor Purchase Contribution Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\vendor_purchase_contribution.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Rank", Int64.Type}, {"VendorName", type text}, {"TotalPurchaseDollars", type number}, {"GrossProfit", type number}, {"TotalSalesDollars", type number}, {"PurchaseContributionPct", type number}, {"CumulativeContributionPct", type number}})
+				in
+				    #"Changed Type"
+

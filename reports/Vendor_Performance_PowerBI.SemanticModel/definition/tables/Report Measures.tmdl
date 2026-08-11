@@ -1,0 +1,95 @@
+table 'Report Measures'
+	lineageTag: bf5123c7-7773-439e-91b0-15a77bd7c744
+
+	measure 'Total Sales' = SUM('Vendor Sales Summary'[TotalSalesDollars])
+		formatString: 0.00
+		lineageTag: 7d91602d-0b33-4835-919e-62095344edb9
+
+	measure 'Total Purchases' = SUM('Vendor Sales Summary'[TotalPurchaseDollars])
+		formatString: 0.00
+		lineageTag: 032776c8-9a01-4db4-9089-ee4ac8ffa8e7
+
+	measure 'Gross Profit' = SUM('Vendor Sales Summary'[GrossProfit])
+		formatString: 0.00
+		lineageTag: 7620531e-0394-4da1-a59b-8b05aa0aa1e9
+
+	measure 'Profit Margin %' = DIVIDE([Gross Profit], [Total Sales]) * 100
+		formatString: 0.00
+		lineageTag: 5ab114fa-cf7c-4fdb-a2cd-55999d03ff2a
+
+	measure 'Stock Turnover' = DIVIDE(SUM('Vendor Sales Summary'[TotalSalesQuantity]), SUM('Vendor Sales Summary'[TotalPurchaseQuantity]))
+		formatString: 0.00
+		lineageTag: 2fcf61f2-479a-4abf-975a-024a13032291
+
+	measure 'Unsold Inventory Value' = SUM('Vendor Sales Summary'[UnsoldInventoryValue])
+		formatString: 0.00
+		lineageTag: c41c43b0-a892-4e10-9141-058044d29520
+
+	measure 'Sales To Purchase Ratio' = DIVIDE([Total Sales], [Total Purchases])
+		formatString: 0.00
+		lineageTag: 58bbaa26-cd89-47f8-a70f-4ee3c30aa22c
+
+	measure 'Average Unit Purchase Price' = AVERAGE('Vendor Sales Summary'[UnitPurchasePrice])
+		formatString: 0.00
+		lineageTag: 72c03cb8-c71c-4ab9-9597-43199d312e9a
+
+	measure 'Target Brand Count' = CALCULATE(COUNTROWS('Brand Margin Targets'), 'Brand Margin Targets'[IsTargetBrand] = TRUE())
+		formatString: 0.00
+		lineageTag: d8d5044f-061d-4b83-95f6-b6598367abb7
+
+	measure 'Top Vendor Sales' = SUM('Top 10 Vendors By Sales'[TotalSalesDollars])
+		formatString: 0.00
+		lineageTag: d3869ad5-b101-43da-8edf-efd9fd491442
+
+	measure 'Top Brand Sales' = SUM('Top 10 Brands By Sales'[TotalSalesDollars])
+		formatString: 0.00
+		lineageTag: b6f76261-0d06-42af-88e5-c91ccad8e18c
+
+	measure 'Vendor Purchase Contribution %' = SUM('Vendor Purchase Contribution'[PurchaseContributionPct])
+		formatString: 0.00
+		lineageTag: 22965257-fde5-4885-812b-64af2706d28d
+
+	measure 'Vendor Purchase Share %' = SUM('Vendor Purchase Share'[PurchaseContributionPct])
+		formatString: 0.00
+		lineageTag: e791e080-8940-4a8d-9af5-0e3811cafa02
+
+	measure 'Brand Profit Margin' = AVERAGE('Brand Margin Targets'[ProfitMargin])
+		formatString: 0.00
+		lineageTag: 43cbc9e0-8566-4bb1-bdb4-ce498371efa9
+
+	measure 'Target Candidate Margin' = AVERAGE('Target Brand Candidates'[ProfitMargin])
+		formatString: 0.00
+		lineageTag: 580e2315-b8e8-4b7e-8046-59ef10bf5349
+
+	measure 'Target Candidate Sales' = SUM('Target Brand Candidates'[TotalSalesDollars])
+		formatString: 0.00
+		lineageTag: bda9d73c-db7c-440c-a989-a7078455efa7
+
+	measure 'Bulk Average Unit Price' = AVERAGE('Bulk Purchase Analysis'[AverageUnitPurchasePrice])
+		formatString: 0.00
+		lineageTag: 849651d2-f08e-4255-9fe0-07c944224a33
+
+	measure 'Low Turnover Avg' = AVERAGE('Low Turnover Vendors'[StockTurnover])
+		formatString: 0.00
+		lineageTag: 51756e40-aec9-46e9-a629-30018a46f93f
+
+	measure 'Top Unsold Inventory' = SUM('Top 10 Unsold Inventory Value'[UnsoldInventoryValue])
+		formatString: 0.00
+		lineageTag: 80218769-07ff-45eb-94b2-ba48d92447c0
+
+	column MeasureTable
+		dataType: string
+		lineageTag: 44030623-f337-4126-a1e8-b2f593731dc8
+		summarizeBy: none
+		sourceColumn: MeasureTable
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Report Measures' = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [MeasureTable = text], {{"Measures"}})
+				in
+				    Source
+

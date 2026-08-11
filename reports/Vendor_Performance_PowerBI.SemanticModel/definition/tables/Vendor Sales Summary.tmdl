@@ -1,0 +1,145 @@
+table 'Vendor Sales Summary'
+	lineageTag: f8621670-9f43-47aa-af28-922c220af5cd
+
+	column VendorNumber
+		dataType: int64
+		lineageTag: 249cd5d8-56a9-45de-9614-99a325de039f
+		summarizeBy: sum
+		sourceColumn: VendorNumber
+
+	column VendorName
+		dataType: string
+		lineageTag: f2098db9-e56f-46a1-905a-f64f933a3f49
+		summarizeBy: none
+		sourceColumn: VendorName
+
+	column Brand
+		dataType: int64
+		lineageTag: d51b994d-ef25-4ed1-b125-5ea53b05c1c8
+		summarizeBy: sum
+		sourceColumn: Brand
+
+	column Description
+		dataType: string
+		lineageTag: 8899f264-95d3-40eb-8b37-e6a280e07ac2
+		summarizeBy: none
+		sourceColumn: Description
+
+	column PurchasePrice
+		dataType: double
+		lineageTag: ce0afb63-fd91-482e-92c6-48258646a238
+		summarizeBy: sum
+		sourceColumn: PurchasePrice
+
+	column ActualPrice
+		dataType: double
+		lineageTag: 98a85a06-f0fc-41bd-ad48-d33feea54bca
+		summarizeBy: sum
+		sourceColumn: ActualPrice
+
+	column Volume
+		dataType: double
+		lineageTag: 9d13234a-2e44-404e-a23b-c7985bcce4f4
+		summarizeBy: sum
+		sourceColumn: Volume
+
+	column TotalPurchaseQuantity
+		dataType: double
+		lineageTag: 97db3f7f-96ea-4780-9568-7e3736004f5a
+		summarizeBy: sum
+		sourceColumn: TotalPurchaseQuantity
+
+	column TotalPurchaseDollars
+		dataType: double
+		lineageTag: 6e5bfedc-9b90-4e23-be7a-d595ff28b13f
+		summarizeBy: sum
+		sourceColumn: TotalPurchaseDollars
+
+	column TotalSalesQuantity
+		dataType: double
+		lineageTag: d1496d88-86e6-4cfd-a2b1-b35c7b608ddd
+		summarizeBy: sum
+		sourceColumn: TotalSalesQuantity
+
+	column TotalSalesDollars
+		dataType: double
+		lineageTag: b0a35855-fd06-4f6c-94f2-5d77eec282f5
+		summarizeBy: sum
+		sourceColumn: TotalSalesDollars
+
+	column TotalSalesPrice
+		dataType: double
+		lineageTag: c3defcd5-364d-4141-a8af-78e546bdc2df
+		summarizeBy: sum
+		sourceColumn: TotalSalesPrice
+
+	column TotalExciseTax
+		dataType: double
+		lineageTag: 1b3fa643-5b1f-4b28-ab5c-a77e9be86faf
+		summarizeBy: sum
+		sourceColumn: TotalExciseTax
+
+	column FreightCost
+		dataType: double
+		lineageTag: a757c5be-e91b-49c8-9c1f-af7877bd3a2a
+		summarizeBy: sum
+		sourceColumn: FreightCost
+
+	column GrossProfit
+		dataType: double
+		lineageTag: 5c572ef3-f20b-4216-a666-dc2efd54e5e2
+		summarizeBy: sum
+		sourceColumn: GrossProfit
+
+	column ProfitMargin
+		dataType: double
+		lineageTag: a7fadfa1-3026-401c-b310-f4073fab4f74
+		summarizeBy: sum
+		sourceColumn: ProfitMargin
+
+	column StockTurnover
+		dataType: double
+		lineageTag: 1a6c41db-5981-4168-94d9-28c1f78f966d
+		summarizeBy: sum
+		sourceColumn: StockTurnover
+
+	column SalesToPurchaseRatio
+		dataType: double
+		lineageTag: ed8faf12-b7f5-4061-b2f3-294555e36a20
+		summarizeBy: sum
+		sourceColumn: SalesToPurchaseRatio
+
+	column UnitPurchasePrice
+		dataType: double
+		lineageTag: cee6df41-d6c5-4b60-bf87-aa4db99d921a
+		summarizeBy: sum
+		sourceColumn: UnitPurchasePrice
+
+	column UnsoldInventoryValue
+		dataType: double
+		lineageTag: ba355b45-64f2-494c-97ad-624c9785f346
+		summarizeBy: sum
+		sourceColumn: UnsoldInventoryValue
+
+	column OrderSize
+		dataType: string
+		lineageTag: 92a0640d-eacb-4c3f-8d09-3b018ac358d0
+		summarizeBy: none
+		sourceColumn: OrderSize
+
+	column PerformanceGroup
+		dataType: string
+		lineageTag: 9446bed8-ed8a-4af2-aa3b-129b44081123
+		summarizeBy: none
+		sourceColumn: PerformanceGroup
+
+	partition 'Vendor Sales Summary Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\vendor_sales_summary_clean.csv"), [Delimiter=",", Columns=22, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"VendorNumber", Int64.Type}, {"VendorName", type text}, {"Brand", Int64.Type}, {"Description", type text}, {"PurchasePrice", type number}, {"ActualPrice", type number}, {"Volume", type number}, {"TotalPurchaseQuantity", type number}, {"TotalPurchaseDollars", type number}, {"TotalSalesQuantity", type number}, {"TotalSalesDollars", type number}, {"TotalSalesPrice", type number}, {"TotalExciseTax", type number}, {"FreightCost", type number}, {"GrossProfit", type number}, {"ProfitMargin", type number}, {"StockTurnover", type number}, {"SalesToPurchaseRatio", type number}, {"UnitPurchasePrice", type number}, {"UnsoldInventoryValue", type number}, {"OrderSize", type text}, {"PerformanceGroup", type text}})
+				in
+				    #"Changed Type"
+

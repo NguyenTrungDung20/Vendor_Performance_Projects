@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+Python(3.13.09).venv/
+.ipynb_checkpoints/
+
+# Local editor / OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Runtime outputs
+outputs/*.log
+outputs/*.pid.txt
+
+# Raw and backup source data are too large for normal GitHub pushes.
+# Keep report-ready curated CSV files under reports/powerbi_data/.
+data/raw/*.csv
+data/processed/*.csv
+data/backup/*.csv
+
+# Power BI local caches
+reports/**/.pbi/
+reports/**/cache.abf
+reports/**/localSettings.json
+
+# Temporary archives
+*.tmp
+*.temp

@@ -1,0 +1,2 @@
+Test,TStatistic,PValue,Alpha,Conclusion
+Welch Two-Sample T-Test,-17.61894899710159,5.272267564313844e-66,0.05,Reject H0

@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Vendor Sales Summary","KPI Summary","Top 10 Vendors By Sales","Top 10 Brands By Sales","Vendor Purchase Contribution","Vendor Purchase Share","Brand Margin Targets","Target Brand Candidates","Bulk Purchase Analysis","Low Turnover Vendors","Top 10 Unsold Inventory Value","Correlation Matrix","Report Measures"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'Vendor Sales Summary'
+ref table 'KPI Summary'
+ref table 'Top 10 Vendors By Sales'
+ref table 'Top 10 Brands By Sales'
+ref table 'Vendor Purchase Contribution'
+ref table 'Vendor Purchase Share'
+ref table 'Brand Margin Targets'
+ref table 'Target Brand Candidates'
+ref table 'Bulk Purchase Analysis'
+ref table 'Low Turnover Vendors'
+ref table 'Top 10 Unsold Inventory Value'
+ref table 'Correlation Matrix'
+ref table 'Report Measures'
+

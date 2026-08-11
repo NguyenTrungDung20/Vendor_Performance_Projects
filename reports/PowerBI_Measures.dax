@@ -1,0 +1,32 @@
+Total Sales =
+SUM('Vendor Sales Summary'[TotalSalesDollars])
+
+Total Purchases =
+SUM('Vendor Sales Summary'[TotalPurchaseDollars])
+
+Gross Profit =
+SUM('Vendor Sales Summary'[GrossProfit])
+
+Profit Margin % =
+DIVIDE([Gross Profit], [Total Sales]) * 100
+
+Stock Turnover =
+DIVIDE(
+    SUM('Vendor Sales Summary'[TotalSalesQuantity]),
+    SUM('Vendor Sales Summary'[TotalPurchaseQuantity])
+)
+
+Unsold Inventory Value =
+SUM('Vendor Sales Summary'[UnsoldInventoryValue])
+
+Sales To Purchase Ratio =
+DIVIDE([Total Sales], [Total Purchases])
+
+Average Unit Purchase Price =
+AVERAGE('Vendor Sales Summary'[UnitPurchasePrice])
+
+Target Brand Count =
+CALCULATE(
+    COUNTROWS('Brand Margin Targets'),
+    'Brand Margin Targets'[IsTargetBrand] = TRUE()
+)

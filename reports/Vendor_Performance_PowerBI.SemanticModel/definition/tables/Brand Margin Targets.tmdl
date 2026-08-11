@@ -1,0 +1,49 @@
+table 'Brand Margin Targets'
+	lineageTag: 0ee5f5d6-16ac-47e9-bef6-a5d3030af1f1
+
+	column Description
+		dataType: string
+		lineageTag: 2a51e7db-7340-4767-ac51-2d2dfdd0d9c4
+		summarizeBy: none
+		sourceColumn: Description
+
+	column TotalSalesDollars
+		dataType: double
+		lineageTag: 68a7ef83-fbc9-4b68-9e53-a5ee681e1125
+		summarizeBy: sum
+		sourceColumn: TotalSalesDollars
+
+	column ProfitMargin
+		dataType: double
+		lineageTag: d5cb8805-d7b2-4c9a-8171-c232598d95a9
+		summarizeBy: sum
+		sourceColumn: ProfitMargin
+
+	column IsTargetBrand
+		dataType: boolean
+		lineageTag: c20e7596-a808-4951-91c5-d4494d52ea27
+		summarizeBy: none
+		sourceColumn: IsTargetBrand
+
+	column LowSalesThreshold
+		dataType: double
+		lineageTag: d91f1623-093c-49cb-aefb-559aa8637a23
+		summarizeBy: sum
+		sourceColumn: LowSalesThreshold
+
+	column HighMarginThreshold
+		dataType: double
+		lineageTag: 72e04360-e211-4855-a16d-480de12c3861
+		summarizeBy: sum
+		sourceColumn: HighMarginThreshold
+
+	partition 'Brand Margin Targets Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\brand_margin_targets.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Description", type text}, {"TotalSalesDollars", type number}, {"ProfitMargin", type number}, {"IsTargetBrand", type logical}, {"LowSalesThreshold", type number}, {"HighMarginThreshold", type number}})
+				in
+				    #"Changed Type"
+

@@ -1,0 +1,55 @@
+table 'Target Brand Candidates'
+	lineageTag: 3b5a1c38-57e9-4b53-9193-bef8aee3d028
+
+	column Rank
+		dataType: int64
+		lineageTag: fbdc39c8-f7a4-4050-8885-af1d6b9b4151
+		summarizeBy: sum
+		sourceColumn: Rank
+
+	column Description
+		dataType: string
+		lineageTag: 6a2fdd4e-bced-4ea1-bcd5-a73c19e6e546
+		summarizeBy: none
+		sourceColumn: Description
+
+	column TotalSalesDollars
+		dataType: double
+		lineageTag: cbd23880-1e98-4597-884f-fdd7010d2063
+		summarizeBy: sum
+		sourceColumn: TotalSalesDollars
+
+	column ProfitMargin
+		dataType: double
+		lineageTag: 5207f852-11f3-436f-8d1c-d04b6bcc0c5c
+		summarizeBy: sum
+		sourceColumn: ProfitMargin
+
+	column IsTargetBrand
+		dataType: boolean
+		lineageTag: 47c1ce7e-c59e-4672-b8bc-f8200681b496
+		summarizeBy: none
+		sourceColumn: IsTargetBrand
+
+	column LowSalesThreshold
+		dataType: double
+		lineageTag: a61c23d7-af83-4a7a-bda8-7ce23b0f6dda
+		summarizeBy: sum
+		sourceColumn: LowSalesThreshold
+
+	column HighMarginThreshold
+		dataType: double
+		lineageTag: 1844805a-9334-45c0-a14e-013b1e12ddf3
+		summarizeBy: sum
+		sourceColumn: HighMarginThreshold
+
+	partition 'Target Brand Candidates Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\target_brand_candidates.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Rank", Int64.Type}, {"Description", type text}, {"TotalSalesDollars", type number}, {"ProfitMargin", type number}, {"IsTargetBrand", type logical}, {"LowSalesThreshold", type number}, {"HighMarginThreshold", type number}})
+				in
+				    #"Changed Type"
+

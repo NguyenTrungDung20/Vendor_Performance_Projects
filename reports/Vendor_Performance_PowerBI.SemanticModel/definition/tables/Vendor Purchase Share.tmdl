@@ -1,0 +1,25 @@
+table 'Vendor Purchase Share'
+	lineageTag: 0fef39a3-e4f5-43d8-bed4-f7935feb179b
+
+	column VendorName
+		dataType: string
+		lineageTag: 49f46c97-91cd-420e-9255-ff21eed6b0a0
+		summarizeBy: none
+		sourceColumn: VendorName
+
+	column PurchaseContributionPct
+		dataType: double
+		lineageTag: d7531ce7-b59e-4eb3-921d-5de19f8abfef
+		summarizeBy: sum
+		sourceColumn: PurchaseContributionPct
+
+	partition 'Vendor Purchase Share Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\vendor_purchase_share.csv"), [Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"VendorName", type text}, {"PurchaseContributionPct", type number}})
+				in
+				    #"Changed Type"
+

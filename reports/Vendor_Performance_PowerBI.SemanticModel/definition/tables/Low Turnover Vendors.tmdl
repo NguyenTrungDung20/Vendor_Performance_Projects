@@ -1,0 +1,31 @@
+table 'Low Turnover Vendors'
+	lineageTag: 4331d3ad-9136-46ad-80c1-626f6b91970d
+
+	column Rank
+		dataType: int64
+		lineageTag: fb751fe8-fe79-4528-859f-dbe57b7156ad
+		summarizeBy: sum
+		sourceColumn: Rank
+
+	column VendorName
+		dataType: string
+		lineageTag: 417f4d5b-6053-42a7-aeae-a8a8dd1b8239
+		summarizeBy: none
+		sourceColumn: VendorName
+
+	column StockTurnover
+		dataType: double
+		lineageTag: 54bbe32d-7153-49fd-b021-488bce9f5240
+		summarizeBy: sum
+		sourceColumn: StockTurnover
+
+	partition 'Low Turnover Vendors Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\low_turnover_vendors.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Rank", Int64.Type}, {"VendorName", type text}, {"StockTurnover", type number}})
+				in
+				    #"Changed Type"
+

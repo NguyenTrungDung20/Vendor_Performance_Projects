@@ -1,0 +1,127 @@
+table 'Correlation Matrix'
+	lineageTag: e6b9fccb-a08c-4578-854f-616e97afbdd1
+
+	column Metric
+		dataType: string
+		lineageTag: 9a8ea5ce-0013-4c8d-8dd2-faeb12089d36
+		summarizeBy: none
+		sourceColumn: Metric
+
+	column VendorNumber
+		dataType: double
+		lineageTag: 708ae4e3-c65a-4bd0-8cb6-456fe2f5e157
+		summarizeBy: sum
+		sourceColumn: VendorNumber
+
+	column Brand
+		dataType: double
+		lineageTag: 8d210b9f-def8-4c10-8d99-67ddde7ae9b2
+		summarizeBy: sum
+		sourceColumn: Brand
+
+	column PurchasePrice
+		dataType: double
+		lineageTag: c7d32e45-6abb-4d0e-8878-e0c64a9e0e88
+		summarizeBy: sum
+		sourceColumn: PurchasePrice
+
+	column ActualPrice
+		dataType: double
+		lineageTag: 467f062a-3b1f-4635-8f68-7c2983c71307
+		summarizeBy: sum
+		sourceColumn: ActualPrice
+
+	column Volume
+		dataType: double
+		lineageTag: 6af0f21a-573f-4fcf-b1fb-5d4a8b1d39ae
+		summarizeBy: sum
+		sourceColumn: Volume
+
+	column TotalPurchaseQuantity
+		dataType: double
+		lineageTag: 0ac74e87-24a2-4b19-ab48-0352cf582186
+		summarizeBy: sum
+		sourceColumn: TotalPurchaseQuantity
+
+	column TotalPurchaseDollars
+		dataType: double
+		lineageTag: f91d5696-3ad4-4d75-9e28-9d911296edec
+		summarizeBy: sum
+		sourceColumn: TotalPurchaseDollars
+
+	column TotalSalesQuantity
+		dataType: double
+		lineageTag: e7378b20-8617-43ca-9c29-44846fd7b1c0
+		summarizeBy: sum
+		sourceColumn: TotalSalesQuantity
+
+	column TotalSalesDollars
+		dataType: double
+		lineageTag: 18d87bda-1595-481e-ab4b-c6e7fd5b9868
+		summarizeBy: sum
+		sourceColumn: TotalSalesDollars
+
+	column TotalSalesPrice
+		dataType: double
+		lineageTag: 01c2b6a3-5fb5-444d-865d-f13e85f5d280
+		summarizeBy: sum
+		sourceColumn: TotalSalesPrice
+
+	column TotalExciseTax
+		dataType: double
+		lineageTag: 944d2901-bc7c-420e-9bf9-7b3587911fca
+		summarizeBy: sum
+		sourceColumn: TotalExciseTax
+
+	column FreightCost
+		dataType: double
+		lineageTag: 8120b0e3-ae15-4cfa-b8e2-f8f39de68379
+		summarizeBy: sum
+		sourceColumn: FreightCost
+
+	column GrossProfit
+		dataType: double
+		lineageTag: 56069604-40f8-4988-bb43-bdd64125bc73
+		summarizeBy: sum
+		sourceColumn: GrossProfit
+
+	column ProfitMargin
+		dataType: double
+		lineageTag: ac6cd010-e11e-421f-8c31-bbbd24e81f90
+		summarizeBy: sum
+		sourceColumn: ProfitMargin
+
+	column StockTurnover
+		dataType: double
+		lineageTag: 515bc001-83be-4d8d-beec-3d5eabd3b450
+		summarizeBy: sum
+		sourceColumn: StockTurnover
+
+	column SalesToPurchaseRatio
+		dataType: double
+		lineageTag: 41f0ccf8-3412-41d8-a1f4-2f23ce038c72
+		summarizeBy: sum
+		sourceColumn: SalesToPurchaseRatio
+
+	column UnitPurchasePrice
+		dataType: double
+		lineageTag: ed724a0f-60ad-497d-b53e-02237f7d098b
+		summarizeBy: sum
+		sourceColumn: UnitPurchasePrice
+
+	column UnsoldInventoryValue
+		dataType: double
+		lineageTag: 3e0a4628-3dbf-4ef0-8696-a06de81b1ed2
+		summarizeBy: sum
+		sourceColumn: UnsoldInventoryValue
+
+	partition 'Correlation Matrix Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\correlation_matrix.csv"), [Delimiter=",", Columns=19, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Metric", type text}, {"VendorNumber", type number}, {"Brand", type number}, {"PurchasePrice", type number}, {"ActualPrice", type number}, {"Volume", type number}, {"TotalPurchaseQuantity", type number}, {"TotalPurchaseDollars", type number}, {"TotalSalesQuantity", type number}, {"TotalSalesDollars", type number}, {"TotalSalesPrice", type number}, {"TotalExciseTax", type number}, {"FreightCost", type number}, {"GrossProfit", type number}, {"ProfitMargin", type number}, {"StockTurnover", type number}, {"SalesToPurchaseRatio", type number}, {"UnitPurchasePrice", type number}, {"UnsoldInventoryValue", type number}})
+				in
+				    #"Changed Type"
+

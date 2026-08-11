@@ -1,0 +1,31 @@
+table 'KPI Summary'
+	lineageTag: 814bf77b-a602-43c7-9c77-689d9c9611f7
+
+	column Metric
+		dataType: string
+		lineageTag: 8c366996-045c-4232-9986-78d467cd02c4
+		summarizeBy: none
+		sourceColumn: Metric
+
+	column Value
+		dataType: double
+		lineageTag: a8022a16-aa9c-4794-a6b2-72a2e80a01eb
+		summarizeBy: sum
+		sourceColumn: Value
+
+	column DisplayOrder
+		dataType: int64
+		lineageTag: 26a16c5b-7763-461a-87de-b60fabfd8c5e
+		summarizeBy: sum
+		sourceColumn: DisplayOrder
+
+	partition 'KPI Summary Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\kpi_summary.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Metric", type text}, {"Value", type number}, {"DisplayOrder", Int64.Type}})
+				in
+				    #"Changed Type"
+

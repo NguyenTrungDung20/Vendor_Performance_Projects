@@ -1,0 +1,31 @@
+table 'Top 10 Brands By Sales'
+	lineageTag: 77af8e8c-85c9-4aa0-9750-9fbcf2b47189
+
+	column Rank
+		dataType: int64
+		lineageTag: 3ab31154-dedf-442a-ab11-edffcfb2efc9
+		summarizeBy: sum
+		sourceColumn: Rank
+
+	column Description
+		dataType: string
+		lineageTag: 791434c9-9759-4eda-9dc4-5889bfd1f08b
+		summarizeBy: none
+		sourceColumn: Description
+
+	column TotalSalesDollars
+		dataType: double
+		lineageTag: 48754865-ee4e-4184-b71c-e198fb2c302c
+		summarizeBy: sum
+		sourceColumn: TotalSalesDollars
+
+	partition 'Top 10 Brands By Sales Partition' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\\LOCAL_DISK_E\\DATA_ANALYSIS\\Capstone_Projects\\2\\Vendor_Performance_Projects\\reports\\powerbi_data\\top_10_brands_by_sales.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers", {{"Rank", Int64.Type}, {"Description", type text}, {"TotalSalesDollars", type number}})
+				in
+				    #"Changed Type"
+
