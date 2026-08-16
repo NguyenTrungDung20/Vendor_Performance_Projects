@@ -268,18 +268,6 @@ Vendor_Performance_Projects/
 |-- README.md
 ```
 
-## Ghi chú về Power BI
-
-Repo có chứa một số artifact Power BI trong `reports/`, bao gồm `.pbip`, semantic model, theme và các file CSV đã curate. Tuy nhiên, phần này chưa được xem là phần hoàn thiện nhất của dự án.
-
-Nếu đánh giá năng lực phân tích của dự án, nên đọc theo thứ tự:
-
-1. `sql/03_data_profiling.sql`
-2. `sql/04_prepare_database.sql`
-3. `notebooks/01_eda_.ipynb`
-4. `notebooks/02_vendor_analysis.ipynb`
-5. `reports/Reports_pdf/Vendor_Performance_Report.md`
-
 ## Giới hạn và giả định
 
 - Dữ liệu nguồn lớn nên không được commit lên GitHub. Người chạy lại dự án cần tự đặt các file CSV vào `data/processed/`.
